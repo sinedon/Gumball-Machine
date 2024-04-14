@@ -1,9 +1,6 @@
 package edu.iu.habahram.GumballMachine.service;
 
-import edu.iu.habahram.GumballMachine.model.GumballMachine;
-import edu.iu.habahram.GumballMachine.model.GumballMachineRecord;
-import edu.iu.habahram.GumballMachine.model.IGumballMachine;
-import edu.iu.habahram.GumballMachine.model.TransitionResult;
+import edu.iu.habahram.GumballMachine.model.*;
 import edu.iu.habahram.GumballMachine.repository.IGumballRepository;
 import org.springframework.stereotype.Service;
 
@@ -45,7 +42,7 @@ public class GumballService implements IGumballService{
 
     private TransitionResult performTransition(String id, Function<IGumballMachine, TransitionResult> transitionFunction) throws IOException {
         GumballMachineRecord record = gumballRepository.findById(id);
-        IGumballMachine machine = new GumballMachine(record.getId(), record.getState(), record.getCount());
+        IGumballMachine machine = new GumballMachine2(record.getId(), record.getState(), record.getCount());
         TransitionResult result = transitionFunction.apply(machine);
         if(result.succeeded()) {
             record.setState(result.stateAfter());
